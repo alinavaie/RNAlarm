@@ -9,7 +9,7 @@
 import React, {Component} from 'react';
 
 import Alarms from './src/screens/Alarms';
-import NotifService from './NotifService';
+import NotifService from './src/utils/notifications/NotifService';
 
 const notif = new NotifService();
 

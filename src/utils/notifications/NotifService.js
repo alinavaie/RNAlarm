@@ -175,9 +175,9 @@ export default class NotifService {
       // usesChronometer: false, // (optional) Show the `when` field as a stopwatch. Instead of presenting `when` as a timestamp, the notification will show an automatically updating display of the minutes and seconds since when. Useful when showing an elapsed time (like an ongoing phone call), default: false.
       // timeoutAfter: 30000, // (optional) Specifies a duration in milliseconds after which this notification should be canceled, if it is not already canceled, default: null
       priority: 'high',
-      visibility: 'private',
+      visibility: 'public',
       importance: 'high',
-      allowWhileIdle: false,
+      allowWhileIdle: true,
       ignoreInForeground: false,
       // alertAction: 'view',
       /* iOS only properties */
@@ -191,7 +191,7 @@ export default class NotifService {
 
       userInfo: {snoozId: alarm.id + index + 10, snoozeTime: alarm.snooze}, // (optional) default: {} (using null throws a JSON value '<null>' error)
       playSound: true, // (optional) default: true
-      // soundName: emptyProperty, // (optional) Sound to play when the notification is shown. Value of 'default' plays the default sound. It can be set to a custom sound such as 'android.resource://com.xyz/raw/my_sound'. It will look for the 'my_sound' audio file in 'res/raw' directory and play it. default: 'default' (default sound is played)
+      soundName: alert.sound, // (optional) Sound to play when the notification is shown. Value of 'default' plays the default sound. It can be set to a custom sound such as 'android.resource://com.xyz/raw/my_sound'. It will look for the 'my_sound' audio file in 'res/raw' directory and play it. default: 'default' (default sound is played)
       // number: emptyProperty, // (optional) Valid 32 bit integer specified as string. default: none (Cannot be zero)
       repeatType: this.setRepeatType(alarm.repeat),
       repeatTime: 1,
@@ -232,9 +232,9 @@ export default class NotifService {
       usesChronometer: false, // (optional) Show the `when` field as a stopwatch. Instead of presenting `when` as a timestamp, the notification will show an automatically updating display of the minutes and seconds since when. Useful when showing an elapsed time (like an ongoing phone call), default: false.
       timeoutAfter: 30000, // (optional) Specifies a duration in milliseconds after which this notification should be canceled, if it is not already canceled, default: null
       priority: 'high',
-      visibility: 'private',
+      visibility: 'public',
       importance: 'high',
-      allowWhileIdle: false,
+      allowWhileIdle: true,
       ignoreInForeground: false,
       alertAction: 'view',
       /* iOS only properties */

@@ -57,9 +57,9 @@ const NewAlarmModal = props => {
       snooze: selectedSnooze,
       notifNumber: repeat === 'weekend' ? 4 : repeat === 'weekday' ? 10 : 2,
       repeat: repeat,
-      time: moment(time).isAfter(moment(new Date()))
-        ? time
-        : time.setDate(time.getDate() + 1),
+      time: moment(time).isSameOrBefore(moment(new Date()))
+        ? time.setDate(time.getDate() + 1)
+        : time,
 
       active: true,
     };
@@ -78,7 +78,7 @@ const NewAlarmModal = props => {
         });
       } else {
         notif.scheduleNotif(value, value.time, 0);
-        notif.snoozNotif(value, value.time, 10, value.repeat !== 'once');
+        // notif.snoozNotif(value, value.time, 10, value.repeat !== 'once');
       }
     } catch (e) {
       // saving error
