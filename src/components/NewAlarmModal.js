@@ -78,7 +78,7 @@ const NewAlarmModal = props => {
         });
       } else {
         notif.scheduleNotif(value, value.time, 0);
-        // notif.snoozNotif(value, value.time, 10, value.repeat !== 'once');
+        notif.snoozNotif(value, value.time, 10, value.repeat !== 'once');
       }
     } catch (e) {
       // saving error
