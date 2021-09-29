@@ -15,6 +15,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Colors} from '../constant';
 import Icon from 'react-native-vector-icons/dist/FontAwesome';
 import NewAlarmModal from '../components/NewAlarmModal';
+import getNextDates from '../utils/GetNextDate';
 import moment from 'moment';
 
 const Alarms = props => {
@@ -23,17 +24,12 @@ const Alarms = props => {
   const [alarmList, setAlaramList] = useState([]);
 
   useEffect(() => {
-    // notif.getScheduledLocalNotifications(notifs =>
-    //   console.log('notifs: ', notifs),
-    // );
-
     fetchAlarms();
   }, [openModal]);
 
   useEffect(() => {
     const alarimListCopy = alarmList;
     alarmList.forEach((alarm, index) => {
-      // console.log(moment(alarm.time).isBefore(moment(new Date())));
       if (
         alarm.active &&
         alarm.repeat === 'once' &&
@@ -90,18 +86,45 @@ const Alarms = props => {
 
   const deactiveAlarm = selectedItem => {
     const copyList = alarmList;
-    copyList.forEach(async item => {
-      if (item.id === selectedItem.id) {
-        item.active = !item.active;
-        if (item.active) {
-          await notif.scheduleNotif(selectedItem);
-          await notif.snoozNotif(selectedItem);
-        } else {
-          await notif.cancelNotif(selectedItem.id);
-          await notif.cancelNotif(selectedItem.id + 1);
-        }
+    const selectedIndex = copyList.findIndex(
+      item => item.id === selectedItem.id,
+    );
+    copyList[selectedIndex].active = !copyList[selectedIndex].active;
+
+    if (copyList[selectedIndex].active) {
+      if (
+        selectedItem.repeat === 'weekend' ||
+        selectedItem.repeat === 'weekday'
+      ) {
+        const dates = getNextDates(selectedItem.repeat, selectedItem.time);
+        dates.forEach((date, index) => {
+          notif.scheduleNotif(selectedItem, date, index);
+          notif.snoozNotif(selectedItem, date, index + 10);
+        });
+      } else {
+        notif.scheduleNotif(selectedItem, selectedItem.time, 0);
+        notif.snoozNotif(
+          selectedItem,
+          selectedItem.time,
+          10,
+          selectedItem.repeat !== 'once',
+        );
       }
-    });
+    } else {
+      if (
+        selectedItem.repeat === 'weekend' ||
+        selectedItem.repeat === 'weekday'
+      ) {
+        for (let i = 0; i < selectedItem.notifNumber; i++) {
+          notif.cancelNotif(selectedItem.id + i);
+          notif.cancelNotif(selectedItem.id + i + 10);
+        }
+      } else {
+        notif.cancelNotif(selectedItem.id);
+        notif.cancelNotif(selectedItem.id + 10);
+      }
+    }
+
     // console.log(copyList);
     storeAlarms(copyList);
   };
@@ -128,20 +151,14 @@ const Alarms = props => {
         showsVerticalScrollIndicator={false}
       />
 
-      <TouchableOpacity
+      {/* <TouchableOpacity
         style={styles.button}
         onPress={() => {
           notif.getScheduledLocalNotifications(notifs => console.log(notifs));
         }}>
-        <Text>Schedule Notification in 30s</Text>
-      </TouchableOpacity>
-      {/* <TouchableOpacity
-        style={styles.button}
-        onPress={() => {
-          notif.cancelAll();
-        }}>
-        <Text>Cancel all notifications</Text>
+        <Text>Show notifications list</Text>
       </TouchableOpacity> */}
+
       <View style={styles.addButton}>
         {alarmList.length === 0 && (
           <Image
@@ -185,7 +202,6 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   addButton: {
-    // width: '100%',
     justifyContent: 'flex-end',
     alignItems: 'center',
     position: 'absolute',

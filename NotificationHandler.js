@@ -1,4 +1,3 @@
-import NotifService from './NotifService';
 import {Platform} from 'react-native';
 import PushNotification from 'react-native-push-notification';
 
@@ -6,17 +5,7 @@ class NotificationHandler {
   // (required) Called when a remote is received or opened, or local notification is opened
   onNotification(notification) {
     console.log('NotificationHandler:', notification);
-    PushNotification.cancelLocalNotification(notification.data.snoozId);
-    if (notification.action === 'Stop') {
-      if (notification.id !== notification.data.snoozId) {
-        PushNotification.cancelLocalNotification(notification.id);
-        PushNotification.cancelLocalNotification(notification.data.snoozId);
-      } else {
-        PushNotification.cancelLocalNotification(notification.data.snoozId);
-      }
-    } else {
-      // PushNotification.clearLocalNotification(+notification.id, null);
-    }
+
     if (typeof this._onNotification === 'function') {
       this._onNotification(notification);
     }

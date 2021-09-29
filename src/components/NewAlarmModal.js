@@ -69,14 +69,16 @@ const NewAlarmModal = props => {
       await AsyncStorage.setItem('@alarms', jsonValue);
       await setOpenModal(false);
       if (repeat === 'weekend' || repeat === 'weekday') {
-        const dates = getNextDate(repeat);
+        const dates = getNextDate(repeat, time);
         dates.forEach((date, index) => {
+          console.log(date);
+          // console.log(value.time);
           notif.scheduleNotif(value, date, index);
           notif.snoozNotif(value, date, index + 10);
         });
       } else {
         notif.scheduleNotif(value, value.time, 0);
-        notif.snoozNotif(value, value.time, 10, !!value.repeat);
+        notif.snoozNotif(value, value.time, 10, value.repeat !== 'once');
       }
     } catch (e) {
       // saving error

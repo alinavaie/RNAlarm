@@ -149,7 +149,7 @@ export default class NotifService {
   }
 
   scheduleNotif(alarm, time, index) {
-    console.log(time);
+    // console.log(time);
     // this.lastId++;
     PushNotification.localNotificationSchedule({
       // date: new Date(Date.now() + 10 * 1000), // in 30 secs
@@ -202,6 +202,9 @@ export default class NotifService {
     const emptyProperty = Platform.select({ios: '', android: null});
     // this.lastId++;
     console.log(new Date(time + 60 * 1000 * alarm.snooze));
+    console.log(new Date(time));
+    console.log(time);
+
     PushNotification.localNotificationSchedule({
       // date: new Date(Date.now() + 60 * 1000), // in 30 secs
       // date: alarm.time.setTime(alarm.time.getTime() + 1000 * 60 * alarm.snooze),
