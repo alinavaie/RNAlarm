@@ -151,13 +151,13 @@ const Alarms = props => {
         showsVerticalScrollIndicator={false}
       />
 
-      <TouchableOpacity
+      {/* <TouchableOpacity
         style={styles.button}
         onPress={() => {
           notif.getScheduledLocalNotifications(notifs => console.log(notifs));
         }}>
         <Text>Show notifications list</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
 
       <View style={styles.addButton}>
         {alarmList.length === 0 && (
