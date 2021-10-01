@@ -159,6 +159,14 @@ const Alarms = props => {
         <Text>Show notifications list</Text>
       </TouchableOpacity> */}
 
+      {/* <TouchableOpacity
+        style={styles.button}
+        onPress={() => {
+          notif.checkPermission(per => console.log(per));
+        }}>
+        <Text>Show notifications list</Text>
+      </TouchableOpacity> */}
+
       <View style={styles.addButton}>
         {alarmList.length === 0 && (
           <Image

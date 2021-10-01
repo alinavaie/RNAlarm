@@ -31,6 +31,7 @@ export default class NotifService {
         channelId: 'default-channel-id', // (required)
         channelName: 'Default channel', // (required)
         channelDescription: 'A default channel', // (optional) default: undefined.
+        playSound: true, // (optional) default: true
         soundName: 'default', // (optional) See `soundName` parameter of `localNotification` function
         importance: Importance.HIGH, // (optional) default: Importance.HIGH. Int value of the Android notification importance
         vibrate: true, // (optional) default: true. Creates the default vibration pattern if true.
@@ -43,6 +44,7 @@ export default class NotifService {
         channelId: 'sound-channel1-id', // (required)
         channelName: 'Sound channel1', // (required)
         channelDescription: 'A sound channel', // (optional) default: undefined.
+        playSound: true, // (optional) default: true
         soundName: 'nice.mp3', // (optional) See `soundName` parameter of `localNotification` function
         importance: Importance.HIGH, // (optional) default: Importance.HIGH. Int value of the Android notification importance
         vibrate: true, // (optional) default: true. Creates the default vibration pattern if true.
@@ -55,6 +57,7 @@ export default class NotifService {
         channelId: 'sound-channel2-id', // (required)
         channelName: 'Sound channel2', // (required)
         channelDescription: 'A sound channel', // (optional) default: undefined.
+        playSound: true, // (optional) default: true
         soundName: 'pitch.mp3', // (optional) See `soundName` parameter of `localNotification` function
         importance: Importance.HIGH, // (optional) default: Importance.HIGH. Int value of the Android notification importance
         vibrate: true, // (optional) default: true. Creates the default vibration pattern if true.
@@ -67,6 +70,7 @@ export default class NotifService {
         channelId: 'sound-channel3-id', // (required)
         channelName: 'Sound channel3', // (required)
         channelDescription: 'A sound channel', // (optional) default: undefined.
+        playSound: true, // (optional) default: true
         soundName: 'rush.mp3', // (optional) See `soundName` parameter of `localNotification` function
         importance: Importance.HIGH, // (optional) default: Importance.HIGH. Int value of the Android notification importance
         vibrate: true, // (optional) default: true. Creates the default vibration pattern if true.
@@ -79,34 +83,13 @@ export default class NotifService {
         channelId: 'sound-channel4-id', // (required)
         channelName: 'Sound channel4', // (required)
         channelDescription: 'A sound channel', // (optional) default: undefined.
+        playSound: true, // (optional) default: true
         soundName: 'time.mp3', // (optional) See `soundName` parameter of `localNotification` function
         importance: Importance.HIGH, // (optional) default: Importance.HIGH. Int value of the Android notification importance
         vibrate: true, // (optional) default: true. Creates the default vibration pattern if true.
       },
       created =>
         console.log(`createChannel 'sound-channel4-id' returned '${created}'`), // (optional) callback returns whether the channel was created, false means it already existed.
-    );
-  }
-
-  createOrUpdateChannel(soundName) {
-    console.warn(soundName);
-    this.lastChannelCounter++;
-    PushNotification.createChannel(
-      {
-        channelId: 'custom-channel-id', // (required)
-        channelName: `Custom channel - Counter: ${this.lastChannelCounter}`, // (required)
-        channelDescription: `A custom channel to categorise your custom notifications. Updated at: ${Date.now()}`, // (optional) default: undefined.
-        // soundName: 'rush.mp3',
-        importance: Importance.HIGH, // (optional) default: Importance.HIGH. Int value of the Android notification importance
-        vibrate: true, // (optional) default: true. Creates the default vibration pattern if true.
-      },
-      created => console.log(`createChannel returned '${created}'`), // (optional) callback returns whether the channel was created, false means it already existed.
-    );
-  }
-
-  popInitialNotification() {
-    PushNotification.popInitialNotification(notification =>
-      console.log('InitialNotication:', notification),
     );
   }
 
